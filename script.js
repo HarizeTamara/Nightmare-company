@@ -21,7 +21,7 @@ function newTask()
     }
     else if(validateIfExistsNewTask())
     {
-        alert('Já existe uma tarefa com essa descrição')
+        alert('Já existe uma task com essa descrição')
     }
     else
     {
@@ -57,3 +57,67 @@ function removeItem(data)
 }
 
 showValues()
+
+// Popula o seletor com as receitas da Fazenda
+function populateRecipeSelect() {
+    const select = document.getElementById("recipe-select");
+    Object.keys(recipesFazenda).forEach(recipeName => {
+        const option = document.createElement("option");
+        option.value = recipeName;
+        option.textContent = recipeName;
+        select.appendChild(option);
+    });
+}
+
+// Emojis para ingredientes
+function getEmoji(ingredientName) {
+    const map = {
+        "Cenoura": "🥕", "Batata": "🥔", "Tomate": "🍅", "Alface": "🥬", "Repolho": "🥬",
+        "Espinafre": "🌿", "Alecrim": "🌿", "Hortelã": "🌿", "Manjericão": "🌿",
+        "Maçã": "🍎", "Banana": "🍌", "Uva": "🍇", "Milho": "🌽", "Trigo": "🌾",
+        "Água": "💧", "Cana de Açúcar": "🎋", "Melado de Cana": "🍯", "Leite": "🥛"
+    };
+    return map[ingredientName] || "🧺";
+}
+
+// Cálculo da receita
+function calculateRecipe() {
+    const recipeName = document.getElementById("recipe-select").value;
+    const quantity = parseInt(document.getElementById("recipe-quantity").value);
+    const resultEl = document.getElementById("calculation-result");
+
+    if (!recipeName || isNaN(quantity) || quantity <= 0) {
+        resultEl.innerHTML = "Por favor, selecione uma receita e insira uma quantidade válida.";
+        return;
+    }
+
+    const recipe = recipesFazenda[recipeName];
+    const totalYield = recipe.yield * quantity;
+    const minTotal = recipe.minPrice * totalYield;
+    const maxTotal = recipe.maxPrice * totalYield;
+
+    let ingredientsHTML = "<ul class='ingredients-list'>";
+    recipe.ingredients.forEach(ingredient => {
+        const emoji = getEmoji(ingredient.name);
+        const totalQty = ingredient.quantity * quantity;
+        ingredientsHTML += `<li class='ingredient-item'>${emoji} ${ingredient.name}: ${totalQty}</li>`;
+    });
+    ingredientsHTML += "</ul>";
+
+    resultEl.innerHTML = `
+        <strong>${recipeName}</strong><br>
+        Quantidade total: ${totalYield}<br>
+        Receita estimada: R$ ${minTotal.toFixed(2)} - R$ ${maxTotal.toFixed(2)}<br>
+        <strong>Ingredientes:</strong><br>
+        ${ingredientsHTML}
+    `;
+}
+
+// Inicializa tudo
+function init() {
+    showValues();
+    populateRecipeSelect();
+    document.getElementById("calculate-btn").addEventListener("click", calculateRecipe);
+}
+
+init();
