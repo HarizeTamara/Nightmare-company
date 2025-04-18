@@ -3,4 +3,4 @@
 
 ## Pagina Inicial
 
-[![An old rock in the desert](https://i.imgur.com/DlbPMkN.png "Shiprock, New Mexico by Beau Rogers")]
+[ Pagina Inicial](https://i.imgur.com/DlbPMkN.png "Shiprock, New Mexico by Beau Rogers")]
