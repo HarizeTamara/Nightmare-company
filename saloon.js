@@ -18,11 +18,11 @@ function newTask()
     if(!input.value)
     {
         input.style.border = '1px solid red'
-        alert('Digite algo para inserir em sua lista')
+        alert('Digite algo para inserir em sua lista!')
     }
     else if(validateIfExistsNewTask())
     {
-        alert('Já existe uma task com essa descrição')
+        alert('Já existe uma tarefa igual a essa na lista!')
     }
     else
     {
@@ -62,6 +62,7 @@ showValues()
 // Popula o seletor com as receitas da Fazenda
 function populateRecipeSelect() {
     const select = document.getElementById("recipe-select");
+    select.innerHTML = ''; // limpa o conteúdo anterior
     Object.keys(recipesSaloon).forEach(recipeName => {
         const option = document.createElement("option");
         option.value = recipeName;
@@ -72,18 +73,8 @@ function populateRecipeSelect() {
 
 // Emojis para ingredientes
 function getEmoji(ingredientName) {
-    const map = {
-        "Cenoura": "🥕", 
-        "Batata": "🥔", 
-        "Tomate": "🍅", 
-        "Alface": "🥬", 
-        "Repolho": "🥬", 
-        "Alecrim": "🌿", 
-        "Hortelã": "🌿", 
-        "Manjericão": "🌿",
-        "Maçã": "🍎", 
-        "Banana": "🍌", 
-        "Uva": "🍇", 
+    const map = { 
+        "Banana": "🍌",  
         "Milho": "🌽", 
         "Trigo": "🌾",
         "Água": "💧", 
@@ -94,11 +85,23 @@ function getEmoji(ingredientName) {
         "Ovo": "🥚",
         "Carne de Pássaro": "🍗",
         "Alho": "🧄",
-        "Oregano": "🌿",
+        "Orégano": "🌿",
         "Banana": "🍌",
-
+        "Garrafa de Água": "💧",
+        "Amora": "🍇",
+        "Fardo de Garrafa de Vidro": "🍼",
+        "Açúcar": "🍲", 
+        "Rótulo": "📜", 
+        "Álcool Artesanal": "🍶",
+        "Farinha de Trigo": "🍚",
+        "Fardo de Leite Integral": "🍱",
+        "Carne de Caça Grande": "🍖",
+        "Carne de Caça" : "🍖",
+        "Oleo de Milho": "🥫",
+        "Amido de Milho": "🍚",
+        "Levedura": "🍿",
     };
-    return map[ingredientName] || "🧺";
+    return map[ingredientName] || "💢";
 }
 
 // Cálculo da receita

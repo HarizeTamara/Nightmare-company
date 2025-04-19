@@ -1,5 +1,6 @@
 const localStorageKey = 'to-do-list-fazenda';
 import { recipesFazenda } from './RecipesFazenda.js';
+import { ingredientCosts } from './IngredientCostsFazenda.js'; // novo
 
 function validateIfExistsNewTask()
 {
@@ -22,7 +23,7 @@ function newTask()
     }
     else if(validateIfExistsNewTask())
     {
-        alert('Já existe uma task com essa descrição')
+        alert('Já existe uma tarefa igual a essa na lista!')
     }
     else
     {
@@ -62,6 +63,7 @@ showValues()
 // Popula o seletor com as receitas da Fazenda
 function populateRecipeSelect() {
     const select = document.getElementById("recipe-select");
+    select.innerHTML = ''; // limpa o conteúdo anterior
     Object.keys(recipesFazenda).forEach(recipeName => {
         const option = document.createElement("option");
         option.value = recipeName;
@@ -73,16 +75,9 @@ function populateRecipeSelect() {
 // Emojis para ingredientes
 function getEmoji(ingredientName) {
     const map = {
-        "Cenoura": "🥕", 
-        "Batata": "🥔", 
-        "Tomate": "🍅", 
-        "Alface": "🥬", 
-        "Repolho": "🥬",
-        "Espinafre": "🌿", 
-        "Alecrim": "🌿", 
-        "Hortelã": "🌿", 
-        "Manjericão": "🌿",
-        "Maçã": "🍎", 
+        "Junco": "🌿",
+        "Maçã": "🍎",
+        "Maçã Inglesa": "🍎",  
         "Banana": "🍌", 
         "Uva": "🍇", 
         "Milho": "🌽", 
@@ -90,9 +85,33 @@ function getEmoji(ingredientName) {
         "Água": "💧", 
         "Cana de Açúcar": "🎋", 
         "Melado de Cana": "🍯", 
-        "Leite": "🥛"
+        "Leite": "🥛",
+        "Cogumelo Bay Bulete": "🍄",
+        "Papoula": "🌺",
+        "Orégano": "🌿",
+        "Oleander": "🌸",
+        "Ginseng": "🌱",
+        "Alaskan Ginseng": "🌱",
+        "Caixa Rustica": "📦",
+        "Pessêgo": "🍑",
+        "Crina de Galo": "🐓",
+        "Taurina": "🐂",
+        "Leite de Cabra": "🐐",
+        "Lã de Ovelha": "🐑",
+        "Buchada de Bode": "🐐",
+        "Leite de Porca": "🐖" ,
+        "Carne de Porco": "🍖",
+        "Embalagem": "🥡",
+        "Garrafa de Água": "💧",
+        "Cogumelo Guarda Sol": "🍄",
+        "Açúcar": "🍚",
+        "Embalagem de Leite": "🥛",
+        "Fardo de Garrafa de Vidro": "🍶", 
+        "Tampa de Garrafa": "🧫",
+        "Favo de Mel": "🍯",
+        "Madeira": "🍀" ,
     };
-    return map[ingredientName] || "🧺";
+    return map[ingredientName] || "💢";
 }
 
 // Cálculo da receita
@@ -108,30 +127,39 @@ function calculateRecipe() {
 
     const recipe = recipesFazenda[recipeName];
     const totalYield = recipe.yield * quantity;
-    
     const minUnit = recipe.minPrice;
     const maxUnit = recipe.maxPrice;
-    
-    const minTotal = recipe.minPrice * totalYield;
-    const maxTotal = recipe.maxPrice * totalYield;
+    const minTotal = minUnit * totalYield;
+    const maxTotal = maxUnit * totalYield;
 
+    // Calcular custo total
+    let totalCost = 0;
     let ingredientsHTML = '<ul class="ingredients-list">';
     recipe.ingredients.forEach(ingredient => {
         const emoji = getEmoji(ingredient.name);
         const totalQty = ingredient.quantity * quantity;
-        ingredientsHTML += `<li class='ingredient-item'>${emoji} ${ingredient.name}: ${totalQty}</li>`;
+        const unitCost = ingredientCosts[ingredient.name] || 0;
+        const ingredientCost = unitCost * totalQty;
+        totalCost += ingredientCost;
+        ingredientsHTML += `<li class='ingredient-item'>${emoji} ${ingredient.name}: ${totalQty} (U$ ${ingredientCost.toFixed(2)})</li>`;
     });
     ingredientsHTML += "</ul>";
+
+    const lucroMin = minTotal - totalCost;
+    const lucroMax = maxTotal - totalCost;
 
     resultEl.innerHTML = `
         <strong>${recipeName}</strong><br>
         <strong>Quantidade total:</strong> ${totalYield}<br>
         <strong>Preço unitário:</strong> U$ ${minUnit.toFixed(2)} - U$ ${maxUnit.toFixed(2)}<br>
-        <strong>Faixa de preço total:</strong> U$ ${minTotal.toFixed(2)} - U$ ${maxTotal.toFixed(2)}<br><br>
+        <strong>Faixa de preço total:</strong> U$ ${minTotal.toFixed(2)} - U$ ${maxTotal.toFixed(2)}<br>
+        <strong><span style="color:darkred">Custo de produção:</span></strong> U$ ${totalCost.toFixed(2)}<br>
+        <strong><span style="color:darkgreen">Lucro estimado:</span></strong> U$ ${lucroMin.toFixed(2)} - U$ ${lucroMax.toFixed(2)}<br><br>
         <strong>Ingredientes:</strong><br>
         ${ingredientsHTML}
     `;
 }
+
 
 // Inicializa tudo
 function init() {

@@ -1,9 +1,6 @@
 :root{
     --color-dark: rgb(0, 0, 0);
     --color-white: #ffffff;
-    --color-aqua: rgb(127,255,212);
-    --color-yellow: rgb(255, 255, 228);
-    --color-azul: #1D4259;
     --color-creme: #D9B68B;
     --color-sujo: #F2D0A7;
     --color-marronclaro: #BF9673;
@@ -167,7 +164,7 @@ h1{
 }
 
 #btn-ok:hover{
-    background-color: var(--color-yellow);
+    background-color: var(--color-sujo);
     color: var(--color-preto);
 }
 
