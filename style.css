@@ -12,8 +12,8 @@
 }
 
 body{
-    font-family: 'Playwrite';
-    font-size: 2rem;
+    font-family: 'Lato';
+    font-size: 22px;
     background-color: var(--color-sujo);
     color: var(--color-preto);
     display: flex;
@@ -24,11 +24,13 @@ body{
 
 h1{
     text-align: center;
+    font-size: 4rem;
+    font-family: 'Playwrite';
 }
 
 .subtitulo {
     font-size: 1rem;
-    font-family: 'Lato-Thin' ;
+    font-family: 'Lato-Thin';
     background-color: var(--color-sujo);
     color: var(--color-preto);
     display: flex;
@@ -38,6 +40,7 @@ h1{
 }
 
 .menu{
+    font-family: 'Lato';
     list-style: none;
     border: none;
     float: left;
@@ -118,7 +121,7 @@ h1{
 }
 
 #btn-new-task:hover{
-    background-color: var(--color-azul);
+    background-color: var(--color-sujo);
 }
 
 #to-do-list{
@@ -201,17 +204,39 @@ h1{
     background-color: var(--color-marronclaro);
     color: var(--color-white);
     cursor: pointer;
+    font-family: 'Lato';
     transition: 0.3s;
 }
 
 #calculate-btn:hover {
-    background-color: var(--color-azul);
+    background-color: var(--color-sujo);
 }
 
 #calculation-result {
     font-size: 1.2rem;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato';
     background-color: var(--color-creme);
     padding: 1rem;
     border-radius: 0.8rem;
+}
+
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.ingredient-item {
+    background-color: var(--color-creme);
+    border: 1px solid var(--color-marronclaro);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Lato', sans-serif;
 }

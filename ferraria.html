@@ -24,9 +24,18 @@
         
         <div class="content">
             <div class="content--left">
-              <!-- Aqui você pode colocar outras funções, botões, informações etc -->
-              <p>Conteúdo do lado esquerdo</p>
-            </div>
+                <div>
+                    <label for="recipe-select">Selecione a receita:</label>
+                    <select id="recipe-select"></select>
+                </div>
+                <div>
+                    <label for="recipe-quantity">Quantidade:</label>
+                    <input type="number" id="recipe-quantity" placeholder="Digite a quantidade">
+                </div>
+                <button id="calculate-btn">Calcular Receita</button>
+                <div id="calculation-result"></div>
+        </div>
+
         <div class="content--right">
             <div class="content--add-item">
                 <input type="text" id="input-new-task" placeholder="Digite sua nova tarefa">
@@ -46,9 +55,46 @@
         <footer>
             <p class="rodape">&copy; 2025 Harize Tamara</p>
         </footer>
-    
-        <script type="module" src="./script.js"></script>
-        <script src="script.js" defer></script>
 
+        <script type="module">
+            import { recipesFerraria } from './recipesFerraria.js';
+    
+            const select = document.getElementById('recipe-select');
+            const inputQuantity = document.getElementById('recipe-quantity');
+            const resultDiv = document.getElementById('calculation-result');
+            const btn = document.getElementById('calculate-btn');
+    
+            Object.entries(recipesFerraria).forEach(([key, value]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = key;
+                select.appendChild(option);
+            });
+    
+            btn.addEventListener('click', () => {
+                const recipe = recipesFerraria[select.value];
+                const quantity = parseInt(inputQuantity.value);
+                if (!recipe || isNaN(quantity) || quantity <= 0) {
+                    resultDiv.innerHTML = '<p>Preencha os campos corretamente.</p>';
+                    return;
+                }
+    
+                const totalIngredients = recipe.ingredients.map(ing => {
+                    return `${ing.name}: ${ing.quantity * quantity}`;
+                }).join('<br>');
+    
+                const min = (recipe.minPrice * recipe.yield * quantity).toFixed(2);
+                const max = (recipe.maxPrice * recipe.yield * quantity).toFixed(2);
+    
+                resultDiv.innerHTML = `
+                    <strong>Ingredientes Necessários:</strong><br>${totalIngredients}<br><br>
+                    <strong>Lucro:</strong><br>Mínimo: $${min} | Máximo: $${max}
+                `;
+            });
+    
+        </script>
+    
+        <script type="module" src="./ferraria.js"></script>
+        <script src="ferraria.js" defer></script>
 </body>
 </html>

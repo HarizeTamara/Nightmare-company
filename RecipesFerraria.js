@@ -1,5 +1,8 @@
-export const recipesFazenda = {
-    "Caixa de Legumes": {
+// RecipesFazenda.js
+
+// Definição e exportação do objeto recipesFerraria deve vir antes de qualquer uso
+export const recipesFerraria = {
+    "Tampa de Garrafa": {
       yield: 25,
       minPrice: 1.8,
       maxPrice: 2.0,

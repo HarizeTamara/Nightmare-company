@@ -1,12 +1,17 @@
-export const recipesFazenda = {
-    "Caixa de Legumes": {
-      yield: 25,
-      minPrice: 1.8,
-      maxPrice: 2.0,
+// RecipesFazenda.js
+
+// Definição e exportação do objeto recipesFazenda deve vir antes de qualquer uso
+export const recipesSaloon = {
+    "Jantar de Valhalla": {
+      yield: 15,
+      minPrice: 0.85,
+      maxPrice: 1.27,
       ingredients: [
-        { name: "Cenoura", quantity: 5 },
-        { name: "Batata", quantity: 10 },
-        { name: "Tomate", quantity: 10 }
+        { name: "Carne de Pássaro", quantity: 3 },
+        { name: "Alho", quantity: 3 },
+        { name: "Oregano", quantity: 3 },
+        { name: "Ovos", quantity: 5 },
+        { name: "Banana", quantity: 3 },
       ]
     },
     "Caixa de Verduras": {

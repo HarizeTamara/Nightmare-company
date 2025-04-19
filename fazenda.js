@@ -1,4 +1,5 @@
-const localStorageKey = 'to-do-list-gn'
+const localStorageKey = 'to-do-list-fazenda';
+import { recipesFazenda } from './RecipesFazenda.js';
 
 function validateIfExistsNewTask()
 {
@@ -15,7 +16,7 @@ function newTask()
 
     // validation
     if(!input.value)
-    {
+    {   
         input.style.border = '1px solid red'
         alert('Digite algo para inserir em sua lista')
     }
@@ -72,10 +73,24 @@ function populateRecipeSelect() {
 // Emojis para ingredientes
 function getEmoji(ingredientName) {
     const map = {
-        "Cenoura": "🥕", "Batata": "🥔", "Tomate": "🍅", "Alface": "🥬", "Repolho": "🥬",
-        "Espinafre": "🌿", "Alecrim": "🌿", "Hortelã": "🌿", "Manjericão": "🌿",
-        "Maçã": "🍎", "Banana": "🍌", "Uva": "🍇", "Milho": "🌽", "Trigo": "🌾",
-        "Água": "💧", "Cana de Açúcar": "🎋", "Melado de Cana": "🍯", "Leite": "🥛"
+        "Cenoura": "🥕", 
+        "Batata": "🥔", 
+        "Tomate": "🍅", 
+        "Alface": "🥬", 
+        "Repolho": "🥬",
+        "Espinafre": "🌿", 
+        "Alecrim": "🌿", 
+        "Hortelã": "🌿", 
+        "Manjericão": "🌿",
+        "Maçã": "🍎", 
+        "Banana": "🍌", 
+        "Uva": "🍇", 
+        "Milho": "🌽", 
+        "Trigo": "🌾",
+        "Água": "💧", 
+        "Cana de Açúcar": "🎋", 
+        "Melado de Cana": "🍯", 
+        "Leite": "🥛"
     };
     return map[ingredientName] || "🧺";
 }
@@ -93,10 +108,14 @@ function calculateRecipe() {
 
     const recipe = recipesFazenda[recipeName];
     const totalYield = recipe.yield * quantity;
+    
+    const minUnit = recipe.minPrice;
+    const maxUnit = recipe.maxPrice;
+    
     const minTotal = recipe.minPrice * totalYield;
     const maxTotal = recipe.maxPrice * totalYield;
 
-    let ingredientsHTML = "<ul class='ingredients-list'>";
+    let ingredientsHTML = '<ul class="ingredients-list">';
     recipe.ingredients.forEach(ingredient => {
         const emoji = getEmoji(ingredient.name);
         const totalQty = ingredient.quantity * quantity;
@@ -106,8 +125,9 @@ function calculateRecipe() {
 
     resultEl.innerHTML = `
         <strong>${recipeName}</strong><br>
-        Quantidade total: ${totalYield}<br>
-        Receita estimada: R$ ${minTotal.toFixed(2)} - R$ ${maxTotal.toFixed(2)}<br>
+        <strong>Quantidade total:</strong> ${totalYield}<br>
+        <strong>Preço unitário:</strong> U$ ${minUnit.toFixed(2)} - U$ ${maxUnit.toFixed(2)}<br>
+        <strong>Faixa de preço total:</strong> U$ ${minTotal.toFixed(2)} - U$ ${maxTotal.toFixed(2)}<br><br>
         <strong>Ingredientes:</strong><br>
         ${ingredientsHTML}
     `;
@@ -121,3 +141,6 @@ function init() {
 }
 
 init();
+
+window.newTask = newTask;
+window.removeItem = removeItem;
