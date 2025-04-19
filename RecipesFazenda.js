@@ -124,6 +124,14 @@ export const recipesFazenda = {
         { name: "Tampa de Garrafa", quantity: 6 },
         { name: "Fardo de Garrafa de Vidro", quantity: 6},
       ]
-    }
+    },
+    "Produção de Animal": {
+      yield: 1,
+      minPrice: 160,
+      maxPrice: 160,
+      ingredients: [
+        { name: "Animal", quantity: 4 },
+      ]
+    },
   };
   

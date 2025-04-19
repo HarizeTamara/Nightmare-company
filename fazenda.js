@@ -110,6 +110,7 @@ function getEmoji(ingredientName) {
         "Tampa de Garrafa": "🧫",
         "Favo de Mel": "🍯",
         "Madeira": "🍀" ,
+        "Animal": "🐄",
     };
     return map[ingredientName] || "💢";
 }

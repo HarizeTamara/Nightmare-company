@@ -31,5 +31,6 @@ export const ingredientCosts = {
     "Madeira": 0,
     "Moedor": 0.59, // item da ferraria
     "Cana de Açúcar": 0.1,
+    "Animal": 27.5, // item do bersário
   };
   
