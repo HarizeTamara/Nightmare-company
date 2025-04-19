@@ -87,7 +87,7 @@ export const recipesFazenda = {
       minPrice: 0.72,
       maxPrice: 1.08,
       ingredients: [
-        { name: "Açúcar", quantity: 4 },
+        { name: "Cana de Açúcar", quantity: 4 },
         { name: "Favo de Mel", quantity: 4 },
         { name: "Tampa de Garrafa", quantity: 4 },
         { name: "Fardo de Garrafa de Vidro", quantity: 4},
