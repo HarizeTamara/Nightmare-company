@@ -100,6 +100,8 @@ function getEmoji(ingredientName) {
         "Oleo de Milho": "🥫",
         "Amido de Milho": "🍚",
         "Levedura": "🍿",
+        "Batata": "🥔",
+        "Alho": "🧄",
     };
     return map[ingredientName] || "💢";
 }

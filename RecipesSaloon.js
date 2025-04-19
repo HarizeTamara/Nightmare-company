@@ -48,6 +48,17 @@ export const recipesSaloon = {
         { name: "Açúcar", quantity: 4 }
       ]
     },
+    "Batata Recheada": {
+      yield: 15,
+      minPrice: 0.90,
+      maxPrice: 1.35,
+      ingredients: [
+        { name: "Carne de Caça Grande", quantity: 4 },
+        { name: "Alho", quantity: 4 },
+        { name: "Batata", quantity: 4 },
+        { name: "Ovos", quantity: 5 },
+      ]
+    },
     "Refeição do Cowboy": {
       yield: 9,
       minPrice: 1.60,
