@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="./assets/fonts/fonts.css">
-    <title>Fazenda</title>
+    <title>Ferraria</title>
 </head>
 <body>
     <header>
-        <h1 class="titulo">🌾 Fazenda</h1>
+        <h1 class="titulo">🔨 Ferraria</h1>
         <nav>
             <ul class="menu">
                 <li><a href="/index.html">🏠 Home</a></li>
@@ -52,14 +52,14 @@
     </div>  
 
     <script type="module">
-        import { recipesFazenda } from './RecipesFazenda.js';
+        import { recipesFerraria } from './RecipesFerraria.js';
 
         const select = document.getElementById('recipe-select');
         const inputQuantity = document.getElementById('recipe-quantity');
         const resultDiv = document.getElementById('calculation-result');
         const btn = document.getElementById('calculate-btn');
 
-        Object.entries(recipesFazenda).forEach(([key, value]) => {
+        Object.entries(recipesFerraria).forEach(([key, value]) => {
             const option = document.createElement('option');
             option.value = key;
             option.textContent = key;
@@ -67,7 +67,7 @@
         });
 
         btn.addEventListener('click', () => {
-            const recipe = recipesFazenda[select.value];
+            const recipe = recipesFerraria[select.value];
             const quantity = parseInt(inputQuantity.value);
             if (!recipe || isNaN(quantity) || quantity <= 0) {
                 resultDiv.innerHTML = '<p>Preencha os campos corretamente.</p>';
@@ -86,7 +86,6 @@
                 <strong>Lucro:</strong><br>Mínimo: $${min} | Máximo: $${max}
             `;
         });
-
     </script>
     </main>
 
@@ -98,12 +97,12 @@
       </label>
 
     <footer class="footer-text">
-        <a href="https://harizetamara.com" target="_blank" style="text-decoration: none; color: inherit;"> 
-            Desenvolvido por Harize Tamara &copy; 2025
-          </a>
+            <a href="https://harizetamara.com" target="_blank" style="text-decoration: none; color: inherit;"> 
+                Desenvolvido por Harize Tamara &copy; 2025
+              </a>
     </footer>
 
-    <script type="module" src="fazenda.js"></script>
+    <script type="module" src="Ferraria.js"></script>
     <script src="saloon.js" defer></script>
     <script src="toggle-theme.js"></script>
 
