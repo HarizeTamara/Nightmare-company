@@ -75,10 +75,24 @@ function populateRecipeSelect() {
 // Emojis para ingredientes
 function getEmoji(ingredientName) {
     const map = {
-        "Lingote de Ferro": "🔩",
+        "Lingote de Ferro": "🥈",
+        "Lingote de Ouro": "🥇",
+        "Lingote de Aço Reforçado": "🔩",
+        "Lingote de Cobre": "🥉",
         "Amido de Milho": "🍚", 
         "Pedra Sílica": "🥌",
-        "Álcool Artesanal": "🍶", 
+        "Álcool Artesanal": "🍶",
+        "Lingote de Platina": "💎",
+        "Carvão": "⛏️",
+        "Madeira": "🪓",
+        "Minério de Ferro": "⛏️",
+        "Minério de Platina": "⛏️",
+        "Minério de Cobre": "⛏️",
+        "Minério de Ouro": "⛏️",
+        "Madeira Cilindrica": "🧨",
+        "Verniz": "🧴",
+        "Lingote de Aço Reforçado": "🔩",
+        "Farelo de Pedra Preciosa": "✨",
     };
     return map[ingredientName] || "💢";
 }

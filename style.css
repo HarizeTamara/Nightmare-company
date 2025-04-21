@@ -252,9 +252,9 @@ header, nav {
 
 .heart-switch {
     --duration: .45s;
-    --stroke: #D1D6EE;
+    --stroke: #70727a;
     --stroke-active: #BF9673;
-    --fill: #fff;
+    --fill: var(--dark-background-color);
     --fill-active: #F2D0A7;
     --shadow: rgba(0, 9, 61, 0.25);
     cursor: pointer;
