@@ -1,5 +1,6 @@
 const localStorageKey = 'to-do-list-saloon';
 import { recipesSaloon } from './RecipesSaloon.js';
+import { ingredientCosts } from './IngredientCostsSaloon.js'; // novo
 
 function validateIfExistsNewTask()
 {
@@ -123,22 +124,32 @@ function calculateRecipe() {
     const minUnit = recipe.minPrice;
     const maxUnit = recipe.maxPrice;
 
-    const minTotal = recipe.minPrice * totalYield;
-    const maxTotal = recipe.maxPrice * totalYield;
+    const minTotal = minUnit * totalYield;
+    const maxTotal = maxUnit * totalYield;
 
-    let ingredientsHTML = "<ul class='ingredients-list'>";
+    // Calcular custo total
+    let totalCost = 0;
+    let ingredientsHTML = '<ul class="ingredients-list">';
     recipe.ingredients.forEach(ingredient => {
         const emoji = getEmoji(ingredient.name);
         const totalQty = ingredient.quantity * quantity;
-        ingredientsHTML += `<li class='ingredient-item'>${emoji} ${ingredient.name}: ${totalQty}</li>`;
+        const unitCost = ingredientCosts[ingredient.name] || 0;
+        const ingredientCost = unitCost * totalQty;
+        totalCost += ingredientCost;
+        ingredientsHTML += `<li class='ingredient-item'>${emoji} ${ingredient.name}: ${totalQty} (U$ ${ingredientCost.toFixed(2)})</li>`;
     });
     ingredientsHTML += "</ul>";
+
+    const lucroMin = minTotal - totalCost;
+    const lucroMax = maxTotal - totalCost;
 
     resultEl.innerHTML = `
         <strong>${recipeName}</strong><br>
         <strong>Quantidade total:</strong> ${totalYield}<br>
         <strong>Preço unitário:</strong> U$ ${minUnit.toFixed(2)} - U$ ${maxUnit.toFixed(2)}<br>
-        <strong>Faixa de preço total:</strong> U$ ${minTotal.toFixed(2)} - U$ ${maxTotal.toFixed(2)}<br><br>
+        <strong>Faixa de preço total:</strong> U$ ${minTotal.toFixed(2)} - U$ ${maxTotal.toFixed(2)}<br>
+        <strong><span style="color:darkred">Custo de produção:</span></strong> U$ ${totalCost.toFixed(2)}<br>
+        <strong><span style="color:darkgreen">Lucro estimado:</span></strong> U$ ${lucroMin.toFixed(2)} - U$ ${lucroMax.toFixed(2)}<br><br>
         <strong>Ingredientes:</strong><br>
         ${ingredientsHTML}
     `;

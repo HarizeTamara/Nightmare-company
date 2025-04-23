@@ -4,11 +4,11 @@ export const recipesFazenda = {
       minPrice: 1.8,
       maxPrice: 2.0,
       ingredients: [
-        { name: "Cogumelo Bay Bulete", quantity: 25 },
-        { name: "Trigo", quantity: 25 },
-        { name: "Junco", quantity: 25 },
-        { name: "Papoula", quantity: 25 },
-        { name: "Caixa Rustica", quantity: 25 },
+        { name: "Cogumelo Bay Bulete", quantity: 50 },
+        { name: "Trigo", quantity: 50 },
+        { name: "Junco", quantity: 50 },
+        { name: "Papoula", quantity: 50 },
+        { name: "Caixa Rustica", quantity: 5 },
       ]
     },
     "Caixa de Verduras": {
@@ -16,10 +16,10 @@ export const recipesFazenda = {
       minPrice: 1.8,
       maxPrice: 2.0,
       ingredients: [
-        { name: "Trigo", quantity: 25 },
+        { name: "Trigo", quantity: 50 },
         { name: "Milho", quantity: 100 },
         { name: "Junco", quantity: 50 },
-        { name: "Caixa Rustica", quantity: 25 },
+        { name: "Caixa Rustica", quantity: 5 },
       ]
     },
     "Caixa de Ervas": {
@@ -32,7 +32,7 @@ export const recipesFazenda = {
         { name: "Ginseng", quantity: 25 },
         { name: "Alaskan Ginseng", quantity: 25 },
         { name: "Papoula", quantity: 25 },
-        { name: "Caixa Rustica", quantity: 25 },
+        { name: "Caixa Rustica", quantity: 5 },
       ]
     },
     "Caixa de Frutas": {
@@ -43,7 +43,7 @@ export const recipesFazenda = {
         { name: "Maçã", quantity: 25 },
         { name: "Maçã Inglesa", quantity: 25 },
         { name: "Banana", quantity: 100 },
-        { name: "Pessêgo", quantity: 25 },
+        { name: "Pessêgo", quantity: 50 },
         { name: "Caixa Rustica", quantity: 25 },
       ]
     },
@@ -52,15 +52,16 @@ export const recipesFazenda = {
       minPrice: 1.8,
       maxPrice: 2.0,
       ingredients: [
-        { name: "Crina de Galo", quantity: 20 },
-        { name: "Taurina", quantity: 20 },
-        { name: "Leite de Cabra", quantity: 120 },
-        { name: "Lã de Ovelha", quantity: 20 },
-        { name: "Buchada de Bode", quantity: 20 },
-        { name: "Leite de Cabra", quantity: 20 },
-        { name: "Carne de Porco", quantity: 20 },
-        { name: "Leite de Porca", quantity: 20 },
-        { name: "Caixa Rustica", quantity: 25 },
+        { name: "Couro de Mula", quantity: 15 }, //2
+        { name: "Crina de Galo", quantity: 15},//9
+        { name: "Taurina", quantity: 15 }, //8
+        { name: "Leite de Cabra", quantity: 15 }, //5
+        { name: "Lã de Ovelha", quantity: 15 }, //1
+        { name: "Buchada de Bode", quantity: 15 }, //4
+        { name: "Carne de Porco", quantity: 15 },//7
+        { name: "Leite de Porca", quantity: 15 },//6
+        { name: "Caixa Rustica", quantity: 3 }, //3
+        { name: "Leite de Mula", quantity: 15 }, //10
       ]
     },
     "Saca de Milho": {

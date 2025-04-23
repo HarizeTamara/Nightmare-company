@@ -1,6 +1,6 @@
-const localStorageKey = 'to-do-list-fazenda';
-import { recipesFazenda } from './RecipesFazenda.js';
-import { ingredientCosts } from './IngredientCostsFazenda.js'; // novo
+const localStorageKey = 'to-do-list-druidas';
+import { recipesDruidas } from './RecipesDruidas.js';
+import { ingredientCosts } from './IngredientCostsDruidas.js'; // novo
 
 function validateIfExistsNewTask()
 {
@@ -64,7 +64,7 @@ showValues()
 function populateRecipeSelect() {
     const select = document.getElementById("recipe-select");
     select.innerHTML = ''; // limpa o conteúdo anterior
-    Object.keys(recipesFazenda).forEach(recipeName => {
+    Object.keys(recipesDruidas).forEach(recipeName => {
         const option = document.createElement("option");
         option.value = recipeName;
         option.textContent = recipeName;
@@ -75,42 +75,11 @@ function populateRecipeSelect() {
 // Emojis para ingredientes
 function getEmoji(ingredientName) {
     const map = {
-        "Junco": "🌿",
-        "Maçã": "🍎",
-        "Maçã Inglesa": "🍎",  
-        "Banana": "🍌", 
-        "Uva": "🍇", 
-        "Milho": "🌽", 
-        "Trigo": "🌾",
-        "Água": "💧", 
-        "Cana de Açúcar": "🎋", 
-        "Melado de Cana": "🍯", 
-        "Leite": "🥛",
-        "Cogumelo Bay Bulete": "🍄",
-        "Papoula": "🌺",
-        "Orégano": "🌿",
-        "Oleander": "🌸",
-        "Ginseng": "🌱",
-        "Alaskan Ginseng": "🌱",
-        "Caixa Rustica": "📦",
-        "Pessêgo": "🍑",
-        "Crina de Galo": "🐓",
-        "Taurina": "🐂",
-        "Leite de Cabra": "🐐",
-        "Lã de Ovelha": "🐑",
-        "Buchada de Bode": "🐐",
-        "Leite de Porca": "🐖" ,
-        "Carne de Porco": "🍖",
-        "Embalagem": "🥡",
-        "Garrafa de Água": "💧",
-        "Cogumelo Guarda Sol": "🍄",
-        "Açúcar": "🍚",
-        "Embalagem de Leite": "🥛",
-        "Fardo de Garrafa de Vidro": "🍶", 
-        "Tampa de Garrafa": "🧫",
-        "Favo de Mel": "🍯",
-        "Madeira": "🍀" ,
-        "Animal": "🐄",
+        "Amora": "🍇", 
+        "Groselha Negra": "🍇", 
+        "Girassol": "🌻",
+        "Fardo de Garrafa de Vidro": "🍶",  
+        "Tampa de Garrafa": "🧫" ,
     };
     return map[ingredientName] || "💢";
 }
@@ -126,12 +95,10 @@ function calculateRecipe() {
         return;
     }
 
-    const recipe = recipesFazenda[recipeName];
+    const recipe = recipesDruidas[recipeName];
     const totalYield = recipe.yield * quantity;
-
     const minUnit = recipe.minPrice;
     const maxUnit = recipe.maxPrice;
-    
     const minTotal = minUnit * totalYield;
     const maxTotal = maxUnit * totalYield;
 
