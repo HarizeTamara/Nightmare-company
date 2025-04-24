@@ -80,7 +80,7 @@ showValues()
 
 window.newTask = newTask;
 window.removeItem = removeItem;
-window.toggleChecked = toggleChecked;  // ← não esqueça desta linha!
+window.toggleChecked = toggleChecked;
 
 // Popula o seletor com as receitas da Ferraria
 function populateRecipeSelect() {
@@ -132,8 +132,10 @@ function calculateRecipe() {
 
     const recipe = recipesFerraria[recipeName];
     const totalYield = recipe.yield * quantity;
+
     const minUnit = recipe.minPrice;
     const maxUnit = recipe.maxPrice;
+    
     const minTotal = minUnit * totalYield;
     const maxTotal = maxUnit * totalYield;
 
@@ -175,8 +177,5 @@ function init() {
 
 init();
 
-// Expõe as funções para o escopo global
-window.newTask       = newTask;
-window.removeItem    = removeItem;
-
-document.getElementById('btn-new-task').addEventListener('click', newTask);
+window.newTask = newTask;
+window.removeItem = removeItem;
