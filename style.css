@@ -191,6 +191,11 @@ header, nav {
     gap: 2rem;
 }
 
+.checked {
+  text-decoration: line-through;
+  color: gray;
+}
+
 #recipe-select,
 #recipe-quantity,
 #calculate-btn {
