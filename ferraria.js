@@ -78,9 +78,8 @@ function toggleChecked(index) {
 
 showValues()
 
-// Expõe as funções para o escopo global
-window.newTask       = newTask;
-window.removeItem    = removeItem;
+window.newTask = newTask;
+window.removeItem = removeItem;
 window.toggleChecked = toggleChecked;  // ← não esqueça desta linha!
 
 // Popula o seletor com as receitas da Ferraria
@@ -179,4 +178,3 @@ init();
 // Expõe as funções para o escopo global
 window.newTask       = newTask;
 window.removeItem    = removeItem;
-window.toggleChecked = toggleChecked;  // ← não esqueça desta linha!
