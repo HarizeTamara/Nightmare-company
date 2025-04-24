@@ -178,3 +178,5 @@ init();
 // Expõe as funções para o escopo global
 window.newTask       = newTask;
 window.removeItem    = removeItem;
+
+document.getElementById('btn-new-task').addEventListener('click', newTask);

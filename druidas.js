@@ -80,7 +80,7 @@ showValues()
 
 window.newTask = newTask;
 window.removeItem = removeItem;
-window.toggleChecked = toggleChecked;
+window.toggleChecked = toggleChecked; // ← não esqueça desta linha!
 
 
 // Popula o seletor com as receitas dos Druidas
