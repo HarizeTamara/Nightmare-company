@@ -76,11 +76,13 @@ function populateRecipeSelect() {
 function getEmoji(ingredientName) {
     const map = {
         "Amoras": "🍇", 
-        "Groselha Negra": "🍇", 
+        "Amora": "🍇",
+        "Grosselha Negra Negra": "🍇", 
         "Girassol": "🌻",
         "Fardo de Garrafa de Vidro": "🍶",  
         "Tampa de Garrafa": "🧫" ,
         "Carvão": "🖤",
+        "Cristal 22": "✨",
     };
     return map[ingredientName] || "💢";
 }
