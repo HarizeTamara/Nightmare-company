@@ -1,6 +1,16 @@
 # Nightmare-company
  Design sofisticado pra check-in de atividade e produção de receitas em mais de uma empresa de forma mais eficiente com calculo de faixa de preço.
 
+ - [x] Sistema de Calculo de Receitas separado por empresa;
+ - [x] Sistema de Listagem de Tarefas separado por empresa;
+ - [x] Modo noturno;
+ - [ ] Calculadora wiget;
+ - [ ] Sistema de Login;
+ - [ ] Sistema de Cadastro;
+ - [ ] Sistema de Logout;
+ - [ ] Sistema de Pedidos;
+ - [ ] Sistema de Cadastro de Clientes;
+
 ## Layout
 
 ![Home](https://i.imgur.com/DlbPMkN.png )]
