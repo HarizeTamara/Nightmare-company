@@ -104,6 +104,17 @@ export const recipesFazenda = {
         { name: "Embalagem", quantity: 6 },
       ]
     },
+    "Cerveja de Trigo": {
+      yield: 28,
+      minPrice: 0.00,
+      maxPrice: 0.00,
+      ingredients: [
+        { name: "Álcool Artesanal", quantity: 6 },
+        { name: "Rótulo", quantity: 6 },
+        { name: "Farinha de Trigo", quantity: 3 },
+        { name: "Fardo de Garrafa de Vidro", quantity: 6},
+      ]
+    },
     "Açúcar": {
       yield: 15,
       minPrice: 0.61,
@@ -123,6 +134,7 @@ export const recipesFazenda = {
         { name: "Leite", quantity: 6 },
         { name: "Madeira", quantity: 3 },
         { name: "Tampa de Garrafa", quantity: 6 },
+        { name: "Coador", quantity: 3 },
         { name: "Fardo de Garrafa de Vidro", quantity: 6},
       ]
     },
