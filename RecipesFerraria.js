@@ -62,7 +62,7 @@ export const recipesFerraria = {
       minPrice: 10.40,
       maxPrice: 15.60,
       ingredients: [
-        { name: "Lingote de Aço Reforçado", quantity: 6 },
+        { name: "Lingote de Aço Reforçado", quantity: 3 },
         { name: "Verniz", quantity: 8 },
         { name: "Madeira Cilindrica", quantity: 6 },
       ]
@@ -153,8 +153,7 @@ export const recipesFerraria = {
         { name: "Lingote de Platina", quantity: 2 },
         { name: "Lingote de Cobre", quantity: 2 },
         { name: "Lingote de Ouro", quantity: 2 },
-        { name: "Carvão", quantity: 2 },
-        { name: "Madeira", quantity: 2 },
+        { name: "Carvão", quantity: 4 },
       ]
     },
     "Rubi Bruto": {
