@@ -10,8 +10,8 @@
  - [ ] Sistema de Logout;
  - [ ] Sistema de Cadastro de Clientes;
  - [x] Sistema de Pedidos;
-    - [ ] Campo de Nome e Pombo do Cliente; 
-    - [ ] Valores de cada item;
+    - [x] Campo de Nome e Pombo do Cliente; 
+    - [x] Valores de cada item;
     - [x] Valores do total do pedido;
  - [ ] Calculo de Preço de Venda;
 

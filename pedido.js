@@ -60,25 +60,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Calcula o total mínimo e máximo
-  function calcularTotal() {
-    let totalMin = 0,
-      totalMax = 0;
+function calcularTotal() {
+  let totalMin = 0,
+    totalMax = 0;
 
-    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-      const input = row.querySelector(".quantidade");
-      const qtd = Number(input.value) || 0;
-      const min = Number(input.dataset.min);
-      const max = Number(input.dataset.max);
+  tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+    const input = row.querySelector(".quantidade");
+    const qtd = Number(input.value) || 0;
+    const min = Number(input.dataset.min);
+    const max = Number(input.dataset.max);
 
-      totalMin += qtd * min;
-      totalMax += qtd * max;
-    });
+    // Atualiza o preço individual na tabela
+    const precoCell = row.querySelector("td:last-child");
+    precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
 
-    totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
-      2
-    )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
-  }
+    // Soma os valores ao total geral
+    totalMin += qtd * min;
+    totalMax += qtd * max;
+  });
 
+  // Atualiza o total geral
+  totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
+    2
+  )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
+}
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
     const embed = {
