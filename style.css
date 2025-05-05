@@ -469,3 +469,196 @@ body.dark .ingredient-item:hover {
   background-color: var(--color-sujo);
   color: var(--color-sujo);
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+#itens-container {
+  width: 80%;
+  text-align: center;
+}
+
+#tabelaPedidos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#tabelaPedidos th,
+#tabelaPedidos td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+#obs {
+  width: 80%;
+  height: 100px;
+  resize: none;
+}
+
+#enviar {
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  background-color: var(--primary-color);
+  color: var(--color-white);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#enviar:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Estilo para o contêiner da tabela */
+.tabela-container {
+  background-color: var(--color-creme); /* Cor de fundo semelhante ao cálculo da receita */
+  padding: 1rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+  margin-top: 1rem;
+}
+
+/* Estilo para a tabela */
+#tabelaPedidos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #F2D0A7; /* Cor fixa para o fundo da tabela */
+  border-radius: 0.5rem;
+  overflow: hidden; /* Garante que o border-radius funcione */
+}
+
+/* Estilo para as células da tabela */
+#tabelaPedidos th,
+#tabelaPedidos td {
+  border: 1px solid #BF9673; /* Cor fixa para as bordas */
+  padding: 0.5rem;
+  text-align: center;
+  color: #232323; /* Cor fixa para o texto */
+}
+
+/* Estilo para o cabeçalho da tabela */
+#tabelaPedidos th {
+  background-color: #BF9673; /* Cor fixa para o fundo do cabeçalho */
+  color: #FFFFFF; /* Cor fixa para o texto do cabeçalho */
+  font-weight: bold;
+}
+
+/* Estilo para as linhas alternadas */
+#tabelaPedidos tr:nth-child(even) {
+  background-color: #D9B68B; /* Cor fixa para as linhas alternadas */
+}
+
+/* Contêiner para alinhar Nome e Pombo na mesma linha */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem; /* Espaçamento entre os campos */
+  width: 100%;
+  max-width: 800px; /* Limita a largura total */
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  flex: 1; /* Faz os campos ocuparem o mesmo espaço */
+}
+
+.form-container label {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-preto);
+}
+
+.form-container input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-marronclaro);
+  border-radius: 0.5rem;
+  background-color: var(--color-white);
+  color: var(--color-preto);
+}
+
+.form-container input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.container-estabelecimento {
+  font-size: 1.5rem; /* Aumenta o tamanho da fonte */
+  font-weight: bold; /* Deixa o texto em negrito */
+  color: var(--color-preto); /* Mantém a cor consistente com o tema */
+  margin-bottom: 0.5rem; /* Adiciona um pequeno espaçamento abaixo */
+}
+
+#estabelecimento {
+  font-size: 1rem; /* Ajuste o tamanho da fonte */
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-marronclaro);
+  background-color: var(--color-white);
+  color: var(--color-preto);
+  width: 10%; /* Garante que o select ocupe toda a largura do contêiner */
+}
+
+#estabelecimento option {
+  font-size: 1rem; /* Ajuste o tamanho da fonte dos itens */
+}
+
+/* Estilo para a caixa de entrada de quantidade */
+.quantidade {
+  font-size: 1rem; /* Ajusta o tamanho da fonte para ser igual ao nome dos itens */
+  padding: 0.8rem;
+  border-radius: 0.5rem; /* Arredonda as bordas */
+  border: 1px solid var(--color-marronclaro);
+  background-color: var(--color-white);
+  color: var(--color-preto);
+  width: 30%; /* Ajusta a largura para ocupar o espaço necessário */
+}
+
+.quantidade:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+#obs {
+  width: 80%;
+  height: 100px;
+  resize: none;
+  font-size: 1rem; /* Ajusta o tamanho da fonte para ser igual ao campo Nome */
+  padding: 0.8rem;
+  border: 1px solid var(--color-marronclaro);
+  border-radius: 0.5rem;
+  background-color: var(--color-white);
+  color: var(--color-preto);
+}
+
+#obs:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
