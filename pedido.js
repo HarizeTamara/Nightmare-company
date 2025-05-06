@@ -86,9 +86,10 @@ function calcularTotal() {
 }
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
+    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text; // Obtém o nome do estabelecimento selecionado
     const embed = {
-      title: "📦 Novo Pedido",
-      description: `🧾 Pedido de ${nome} (🕊️ Pombo: ${pombo})`,
+      title: `📦 Novo Pedido - ${estabelecimento}`,
+      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
       fields: [
         {
           name: "📝 Observação",
