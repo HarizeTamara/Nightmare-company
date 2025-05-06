@@ -520,7 +520,7 @@ body.dark .ingredient-item:hover {
   padding: 0.8rem 2rem;
   font-size: 1.2rem;
   background-color: var(--primary-color);
-  color: var(--color-white);
+  color: var(--color-preto);
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -562,7 +562,7 @@ body.dark .ingredient-item:hover {
 /* Estilo para o cabeçalho da tabela */
 #tabelaPedidos th {
   background-color: #BF9673; /* Cor fixa para o fundo do cabeçalho */
-  color: #FFFFFF; /* Cor fixa para o texto do cabeçalho */
+  color: var(--color-preto); /* Cor fixa para o texto do cabeçalho */
   font-weight: bold;
 }
 
@@ -661,4 +661,25 @@ body.dark .ingredient-item:hover {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 4px var(--primary-color);
+}
+
+/* Modo escuro: Ajusta a cor dos rótulos */
+body.dark label {
+  color: var(--color-sujo);
+}
+
+/* Garante que os textos mantenham a mesma cor no modo escuro */
+body.dark h2,
+body.dark #total-geral,
+body.dark #tabelaPedidos th {
+  color: var(--color-preto); /* Cor fixa para o texto */
+}
+
+/* Garante que o fundo da tabela também não mude */
+body.dark #tabelaPedidos {
+}
+
+body.dark #tabelaPedidos th,
+body.dark #tabelaPedidos td {
+  color: var(--color-preto); /* Texto preto fixo */
 }
