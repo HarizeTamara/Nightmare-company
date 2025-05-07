@@ -130,13 +130,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const webhookURL = "https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C";
 
-    fetch(webhookURL, {
+    fetch("https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ embeds: [embed] }),
-    })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: "Teste simples!" })
+  })
       .then((response) => {
         if (response.ok) {
           alert("Pedido enviado com sucesso!");
