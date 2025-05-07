@@ -126,68 +126,53 @@ function calcularTotal() {
     color: 14268043,
   };
 
-  enviarParaDiscord(embed); // <- chama a função que envia ao backend
-}
+  const webhookURL = "https://discord.com/api/webhooks/1369722292246020218/3wDAF3U7RUQyLB5OSw-LDoUho5mhcv7AimB0GqrN041xoVQQsB58rUmUr4DHnSjjBAy5";
 
-// Essa função envia ao backend (Render)
-async function enviarParaDiscord(embed) {
-  const webhookURL = "https://backend-wapq.onrender.com/enviar-pedido";
-
-  try {
-    const response = await fetch(webhookURL, {
+    fetch(webhookURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ embeds: [embed] }), //  Envie apenas { embeds: [embed] }
+      body: JSON.stringify({ embeds: [embed] }),
+    }).then((response) => {
+      if (response.ok) {
+        alert("Pedido enviado com sucesso!");
+      } else {
+        alert("Erro ao enviar o pedido.");
+      }
+    });
+  }
+
+  // Evento de clique para enviar o pedido
+  btnEnviar.addEventListener("click", () => {
+    const nome = inputNome.value.trim();
+    const pombo = inputPombo.value.trim();
+    const observacao = inputObservacao.value.trim();
+
+    if (!nome || !pombo) {
+      return alert("Preencha Nome e Pombo antes de finalizar.");
+    }
+
+    const pedidos = [];
+    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+      const input = row.querySelector(".quantidade");
+      const qtd = Number(input.value);
+      if (qtd > 0) {
+        const nomeItem = row.cells[0].textContent;
+        const min = Number(input.dataset.min);
+        const max = Number(input.dataset.max);
+        pedidos.push({
+          nomeItem,
+          quantidade: qtd,
+          totalMin: qtd * min,
+          totalMax: qtd * max,
+        });
+      }
     });
 
-    if (response.ok) {
-      document.getElementById("mensagem-confirmacao").style.display = "block";
-      document.getElementById("mensagem-confirmacao").textContent =
-        "Pedido enviado com sucesso!";
-    } else {
-      const errorData = await response.json(); //  Tenta obter o JSON de erro do backend
-      const errorMessage = errorData.message || "Erro ao enviar o pedido.";
-      throw new Error(errorMessage);
+    if (pedidos.length === 0) {
+      return alert("Adicione pelo menos um item ao pedido.");
     }
-  } catch (error) {
-    console.error("Erro:", error);
-    alert("Erro ao enviar o pedido ao Discord: " + error.message); //  Exibe a mensagem de erro
-  }
-}
 
-// Evento de clique para enviar o pedido
-btnEnviar.addEventListener("click", () => {
-  const nome = inputNome.value.trim();
-  const pombo = inputPombo.value.trim();
-  const observacao = inputObservacao.value.trim();
-
-  if (!nome || !pombo) {
-    return alert("Preencha Nome e Pombo antes de finalizar.");
-  }
-
-  const pedidos = [];
-  tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-    const input = row.querySelector(".quantidade");
-    const qtd = Number(input.value);
-    if (qtd > 0) {
-      const nomeItem = row.cells[0].textContent;
-      const min = Number(input.dataset.min);
-      const max = Number(input.dataset.max);
-      pedidos.push({
-        nomeItem,
-        quantidade: qtd,
-        totalMin: qtd * min,
-        totalMax: qtd * max,
-      });
-    }
+    enviarPedidoDiscord(nome, pombo, observacao, pedidos);
   });
-
-  if (pedidos.length === 0) {
-    return alert("Adicione pelo menos um item ao pedido.");
-  }
-
-  enviarPedidoDiscord(nome, pombo, observacao, pedidos);
-});
-});
