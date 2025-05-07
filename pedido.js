@@ -139,7 +139,7 @@ async function enviarParaDiscord(embed) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ embeds: [embed] }),
+      body: JSON.stringify({ embeds: [embed] }), //  Envie apenas { embeds: [embed] }
     });
 
     if (response.ok) {
@@ -147,11 +147,13 @@ async function enviarParaDiscord(embed) {
       document.getElementById("mensagem-confirmacao").textContent =
         "Pedido enviado com sucesso!";
     } else {
-      throw new Error("Erro ao enviar o pedido.");
+      const errorData = await response.json(); //  Tenta obter o JSON de erro do backend
+      const errorMessage = errorData.message || "Erro ao enviar o pedido.";
+      throw new Error(errorMessage);
     }
   } catch (error) {
     console.error("Erro:", error);
-    alert("Erro ao enviar o pedido ao Discord.");
+    alert("Erro ao enviar o pedido ao Discord: " + error.message); //  Exibe a mensagem de erro
   }
 }
 
