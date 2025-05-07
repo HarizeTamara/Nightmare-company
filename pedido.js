@@ -60,35 +60,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Calcula o total mínimo e máximo
-  function calcularTotal() {
-    let totalMin = 0,
-      totalMax = 0;
+function calcularTotal() {
+  let totalMin = 0,
+    totalMax = 0;
 
-    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-      const input = row.querySelector(".quantidade");
-      const qtd = Number(input.value) || 0;
-      const min = Number(input.dataset.min);
-      const max = Number(input.dataset.max);
+  tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+    const input = row.querySelector(".quantidade");
+    const qtd = Number(input.value) || 0;
+    const min = Number(input.dataset.min);
+    const max = Number(input.dataset.max);
 
-      // Atualiza o preço individual na tabela
-      const precoCell = row.querySelector("td:last-child");
-      precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(
-        qtd * max
-      ).toFixed(2)}`;
+    // Atualiza o preço individual na tabela
+    const precoCell = row.querySelector("td:last-child");
+    precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
 
-      // Soma os valores ao total geral
-      totalMin += qtd * min;
-      totalMax += qtd * max;
-    });
+    // Soma os valores ao total geral
+    totalMin += qtd * min;
+    totalMax += qtd * max;
+  });
 
-    // Atualiza o total geral
-    totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
-      2
-    )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
-  }
+  // Atualiza o total geral
+  totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
+    2
+  )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
+}
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
-    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
+    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text; // Obtém o nome do estabelecimento selecionado
     const embed = {
       title: `📦 Novo Pedido - ${estabelecimento}`,
       description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
@@ -130,18 +128,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const webhookURL = "https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C";
 
-    fetch("https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C", {
+    fetch(webhookURL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: "Teste simples!" })
-  })
-      .then((response) => {
-        if (response.ok) {
-          alert("Pedido enviado com sucesso!");
-        } else {
-          alert("Erro ao enviar o pedido.");
-        }
-      });
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ embeds: [embed] }),
+    }).then((response) => {
+      if (response.ok) {
+        alert("Pedido enviado com sucesso!");
+      } else {
+        alert("Erro ao enviar o pedido.");
+      }
+    });
   }
 
   // Evento de clique para enviar o pedido
