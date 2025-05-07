@@ -133,6 +133,7 @@ function getEmoji(ingredientName) {
         "Favo de Mel": "🍯",
         "Madeira": "🍀" ,
         "Animal": "🐄",
+        "Moedor": "🎡",
     };
     return map[ingredientName] || "💢";
 }
