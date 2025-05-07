@@ -86,63 +86,23 @@ document.addEventListener("DOMContentLoaded", () => {
       2
     )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
   }
-  // Envia o pedido para o Discord
-  function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
-    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
-    const embed = {
-      title: `📦 Novo Pedido - ${estabelecimento}`,
-      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
-      fields: [
-        {
-          name: "📝 Observação",
-          value: observacao || "Sem observações",
-          inline: false,
-        },
-        {
-          name: "✨ Itens",
-          value: pedidos
-            .map(
-              (item) =>
-                `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
-                  2
-                )} - R$ ${item.totalMax.toFixed(2)}`
-            )
-            .join("\n"),
-          inline: false,
-        },
-        {
-          name: "Total Mínimo",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMin, 0)
-            .toFixed(2)}`,
-          inline: true,
-        },
-        {
-          name: "Total Máximo",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMax, 0)
-            .toFixed(2)}`,
-          inline: true,
-        },
-      ],
-      color: 14268043,
-    };
 
-    const webhookURL = "https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C";
-
-    fetch(webhookURL, {
+  // Envia o pedido para o backend
+  function enviarPedidoDiscord(nome, pombo, observacao, pedidos, estabelecimento) {
+    fetch("/enviar-pedido", {  // Altere para o endpoint do seu backend
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ embeds: [embed] }),
+      body: JSON.stringify({ nome, pombo, observacao, pedidos, estabelecimento }),  // Envie o estabelecimento
     })
-      .then((response) => {
-        if (response.ok) {
-          alert("Pedido enviado com sucesso!");
-        } else {
-          alert("Erro ao enviar o pedido.");
-        }
+      .then((response) => response.text())
+      .then((message) => {
+        alert(message); // Exibe a mensagem do backend (sucesso ou erro)
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar pedido:", error);
+        alert("Erro ao enviar o pedido.");
       });
   }
 
@@ -151,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nome = inputNome.value.trim();
     const pombo = inputPombo.value.trim();
     const observacao = inputObservacao.value.trim();
+    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text; // Obtenha o estabelecimento
 
     if (!nome || !pombo) {
       return alert("Preencha Nome e Pombo antes de finalizar.");
@@ -177,6 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return alert("Adicione pelo menos um item ao pedido.");
     }
 
-    enviarPedidoDiscord(nome, pombo, observacao, pedidos);
+    enviarPedidoDiscord(nome, pombo, observacao, pedidos, estabelecimento); // Passe o estabelecimento
   });
 });
