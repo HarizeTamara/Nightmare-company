@@ -126,31 +126,22 @@ function calcularTotal() {
       color: 14268043,
     };
 
-   // Enviar pedido ao Discord via backend seguro
-async function enviarParaDiscord(embed) {
-  const webhookURL = "https://minha-api.onrender.com/enviar-pedido"; // ← Ponto de entrada no backend seguro
+    const webhookURL = "https://discord.com/api/webhooks/1368673501493596161/_hkpeBJ1UVe_0Fd-9Md21Txp9VS7BDiH-qu3wrmAaPn1kain3WXrsHNdkMhBEkd1P4AY";
 
-  try {
-    const response = await fetch(webhookURL, {
+    fetch(webhookURL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ embeds: [embed] })
+      body: JSON.stringify({ embeds: [embed] }),
+    }).then((response) => {
+      if (response.ok) {
+        alert("Pedido enviado com sucesso!");
+      } else {
+        alert("Erro ao enviar o pedido.");
+      }
     });
-
-    if (response.ok) {
-      document.getElementById("mensagem-confirmacao").style.display = "block";
-      document.getElementById("mensagem-confirmacao").textContent =
-        "Pedido enviado com sucesso!";
-    } else {
-      throw new Error("Erro ao enviar o pedido.");
-    }
-  } catch (error) {
-    console.error("Erro:", error);
-    alert("Erro ao enviar o pedido ao Discord.");
   }
-}  
 
   // Evento de clique para enviar o pedido
   btnEnviar.addEventListener("click", () => {
