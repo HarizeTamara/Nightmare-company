@@ -60,73 +60,75 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Calcula o total mínimo e máximo
-function calcularTotal() {
-  let totalMin = 0,
-    totalMax = 0;
+  function calcularTotal() {
+    let totalMin = 0,
+      totalMax = 0;
 
-  tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-    const input = row.querySelector(".quantidade");
-    const qtd = Number(input.value) || 0;
-    const min = Number(input.dataset.min);
-    const max = Number(input.dataset.max);
+    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+      const input = row.querySelector(".quantidade");
+      const qtd = Number(input.value) || 0;
+      const min = Number(input.dataset.min);
+      const max = Number(input.dataset.max);
 
-    // Atualiza o preço individual na tabela
-    const precoCell = row.querySelector("td:last-child");
-    precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
+      // Atualiza o preço individual na tabela
+      const precoCell = row.querySelector("td:last-child");
+      precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(
+        qtd * max
+      ).toFixed(2)}`;
 
-    // Soma os valores ao total geral
-    totalMin += qtd * min;
-    totalMax += qtd * max;
-  });
+      // Soma os valores ao total geral
+      totalMin += qtd * min;
+      totalMax += qtd * max;
+    });
 
-  // Atualiza o total geral
-  totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
-    2
-  )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
-}
- // Envia o pedido para o Discord
- function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
-  const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
-  const embed = {
-    title: `📦 Novo Pedido - ${estabelecimento}`,
-    description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
-    fields: [
-      {
-        name: "📝 Observação",
-        value: observacao || "Sem observações",
-        inline: false,
-      },
-      {
-        name: "✨ Itens",
-        value: pedidos
-          .map(
-            (item) =>
-              `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
-                2
-              )} - R$ ${item.totalMax.toFixed(2)}`
-          )
-          .join("\n"),
-        inline: false,
-      },
-      {
-        name: "Total Mínimo",
-        value: `R$ ${pedidos
-          .reduce((acc, item) => acc + item.totalMin, 0)
-          .toFixed(2)}`,
-        inline: true,
-      },
-      {
-        name: "Total Máximo",
-        value: `R$ ${pedidos
-          .reduce((acc, item) => acc + item.totalMax, 0)
-          .toFixed(2)}`,
-        inline: true,
-      },
-    ],
-    color: 14268043,
-  };
+    // Atualiza o total geral
+    totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
+      2
+    )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
+  }
+  // Envia o pedido para o Discord
+  function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
+    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
+    const embed = {
+      title: `📦 Novo Pedido - ${estabelecimento}`,
+      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
+      fields: [
+        {
+          name: "📝 Observação",
+          value: observacao || "Sem observações",
+          inline: false,
+        },
+        {
+          name: "✨ Itens",
+          value: pedidos
+            .map(
+              (item) =>
+                `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
+                  2
+                )} - R$ ${item.totalMax.toFixed(2)}`
+            )
+            .join("\n"),
+          inline: false,
+        },
+        {
+          name: "Total Mínimo",
+          value: `R$ ${pedidos
+            .reduce((acc, item) => acc + item.totalMin, 0)
+            .toFixed(2)}`,
+          inline: true,
+        },
+        {
+          name: "Total Máximo",
+          value: `R$ ${pedidos
+            .reduce((acc, item) => acc + item.totalMax, 0)
+            .toFixed(2)}`,
+          inline: true,
+        },
+      ],
+      color: 14268043,
+    };
 
-  const webhookURL = "https://discord.com/api/webhooks/1369722292246020218/3wDAF3U7RUQyLB5OSw-LDoUho5mhcv7AimB0GqrN041xoVQQsB58rUmUr4DHnSjjBAy5";
+    const webhookURL = "https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C";
 
     fetch(webhookURL, {
       method: "POST",
@@ -134,13 +136,14 @@ function calcularTotal() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ embeds: [embed] }),
-    }).then((response) => {
-      if (response.ok) {
-        alert("Pedido enviado com sucesso!");
-      } else {
-        alert("Erro ao enviar o pedido.");
-      }
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Pedido enviado com sucesso!");
+        } else {
+          alert("Erro ao enviar o pedido.");
+        }
+      });
   }
 
   // Evento de clique para enviar o pedido
@@ -176,3 +179,4 @@ function calcularTotal() {
 
     enviarPedidoDiscord(nome, pombo, observacao, pedidos);
   });
+});
