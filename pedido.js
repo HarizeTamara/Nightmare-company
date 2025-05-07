@@ -126,7 +126,7 @@ function calcularTotal() {
       color: 14268043,
     };
 
-    const webhookURL = "https://discord.com/api/webhooks/1197177269418684476/6KSmRv6akyD0bsON1wE6cUTKzAz9LvoYmKwL9FVD00a73MujB77L6jNdK1B1ZT076k9C";
+    const webhookURL = "https://discord.com/api/webhooks/1369722292246020218/3wDAF3U7RUQyLB5OSw-LDoUho5mhcv7AimB0GqrN041xoVQQsB58rUmUr4DHnSjjBAy5";
 
     fetch(webhookURL, {
       method: "POST",
