@@ -60,30 +60,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Calcula o total mínimo e máximo
-function calcularTotal() {
-  let totalMin = 0,
-    totalMax = 0;
+  function calcularTotal() {
+    let totalMin = 0,
+      totalMax = 0;
 
-  tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-    const input = row.querySelector(".quantidade");
-    const qtd = Number(input.value) || 0;
-    const min = Number(input.dataset.min);
-    const max = Number(input.dataset.max);
+    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+      const input = row.querySelector(".quantidade");
+      const qtd = Number(input.value) || 0;
+      const min = Number(input.dataset.min);
+      const max = Number(input.dataset.max);
 
-    // Atualiza o preço individual na tabela
-    const precoCell = row.querySelector("td:last-child");
-    precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
+      // Atualiza o preço individual na tabela
+      const precoCell = row.querySelector("td:last-child");
+      precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
 
-    // Soma os valores ao total geral
-    totalMin += qtd * min;
-    totalMax += qtd * max;
-  });
+      // Soma os valores ao total geral
+      totalMin += qtd * min;
+      totalMax += qtd * max;
+    });
 
-  // Atualiza o total geral
-  totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
-    2
-  )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
-}
+    // Atualiza o total geral
+    totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
+      2
+    )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
+  }
+
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
     const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text; // Obtém o nome do estabelecimento selecionado
@@ -126,54 +127,25 @@ function calcularTotal() {
       color: 14268043,
     };
 
-    const webhookURL = "https://discord.com/api/webhooks/1369722292246020218/3wDAF3U7RUQyLB5OSw-LDoUho5mhcv7AimB0GqrN041xoVQQsB58rUmUr4DHnSjjBAy5";
+    const webhookBackendURL = "https://nightmare-backend.onrender.com";
 
-    fetch(webhookURL, {
+    fetch(webhookBackendURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ embeds: [embed] }),
-    }).then((response) => {
-      if (response.ok) {
-        alert("Pedido enviado com sucesso!");
-      } else {
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Pedido enviado com sucesso!");
+        } else {
+          alert("Erro ao enviar o pedido.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar o pedido:", error);
         alert("Erro ao enviar o pedido.");
-      }
-    });
+      });
   }
-
-  // Evento de clique para enviar o pedido
-  btnEnviar.addEventListener("click", () => {
-    const nome = inputNome.value.trim();
-    const pombo = inputPombo.value.trim();
-    const observacao = inputObservacao.value.trim();
-
-    if (!nome || !pombo) {
-      return alert("Preencha Nome e Pombo antes de finalizar.");
-    }
-
-    const pedidos = [];
-    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
-      const input = row.querySelector(".quantidade");
-      const qtd = Number(input.value);
-      if (qtd > 0) {
-        const nomeItem = row.cells[0].textContent;
-        const min = Number(input.dataset.min);
-        const max = Number(input.dataset.max);
-        pedidos.push({
-          nomeItem,
-          quantidade: qtd,
-          totalMin: qtd * min,
-          totalMax: qtd * max,
-        });
-      }
-    });
-
-    if (pedidos.length === 0) {
-      return alert("Adicione pelo menos um item ao pedido.");
-    }
-
-    enviarPedidoDiscord(nome, pombo, observacao, pedidos);
-  });
 });
