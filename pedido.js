@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       color: 14268043,
     };
 
-    const webhookBackendURL = "https://nightmare-backend.onrender.com";
+    const webhookBackendURL = "https://nightmare-backend.onrender.com/send-webhook";
 
     fetch(webhookBackendURL, {
       method: "POST",
