@@ -1,6 +1,7 @@
 import { receitasFazenda } from "./receitasFazenda.js";
 import { receitasFerraria } from "./receitasFerraria.js";
 import { receitasSaloon } from "./receitasSaloon.js";
+import { webhookURL } from '@seu-usuario/webhook-config';
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectLocal = document.getElementById("estabelecimento");
@@ -70,16 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const min = Number(input.dataset.min);
       const max = Number(input.dataset.max);
 
-      // Atualiza o preço individual na tabela
-      const precoCell = row.querySelector("td:last-child");
-      precoCell.textContent = `R$ ${(qtd * min).toFixed(2)} – R$ ${(qtd * max).toFixed(2)}`;
-
-      // Soma os valores ao total geral
       totalMin += qtd * min;
       totalMax += qtd * max;
     });
 
-    // Atualiza o total geral
     totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
       2
     )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
@@ -87,43 +82,91 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
-  const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
+    const embed = {
+      title: "📦 Novo Pedido",
+      description: `🧾 Pedido de ${nome} (🕊️ Pombo: ${pombo})`,
+      fields: [
+        {
+          name: "📝 Observação",
+          value: observacao || "Sem observações",
+          inline: false,
+        },
+        {
+          name: "Itens",
+          value: pedidos
+            .map(
+              (item) =>
+                `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
+                  2
+                )} - R$ ${item.totalMax.toFixed(2)}`
+            )
+            .join("\n"),
+          inline: false,
+        },
+        {
+          name: "Total Mínimo",
+          value: `R$ ${pedidos
+            .reduce((acc, item) => acc + item.totalMin, 0)
+            .toFixed(2)}`,
+          inline: true,
+        },
+        {
+          name: "Total Máximo",
+          value: `R$ ${pedidos
+            .reduce((acc, item) => acc + item.totalMax, 0)
+            .toFixed(2)}`,
+          inline: true,
+        },
+      ],
+      color: 3066993,
+    };
 
-  const embed = {
-    title: `📦 Novo Pedido - ${estabelecimento}`,
-    description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
-    fields: [
-      {
-        name: "📝 Observação",
-        value: observacao || "Sem observações",
-        inline: false
+    fetch(webhookURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      {
-        name: "✨ Itens",
-        value: pedidos.map(item =>
-          `${item.nomeItem} - Qtd: ${item.quantidade} - R$ ${item.totalMin.toFixed(2)} ~ R$ ${item.totalMax.toFixed(2)}`
-        ).join("\n"),
-        inline: false
+      body: JSON.stringify({ embeds: [embed] }),
+    }).then((response) => {
+      if (response.ok) {
+        alert("Pedido enviado com sucesso!");
+      } else {
+        alert("Erro ao enviar o pedido.");
       }
-    ],
-    color: 14268043
-  };
-
-  fetch('https://hkdk.events/hq4aq8dspgnmts', { // <-- URL do Hookdeck gerada
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ embeds: [embed] })
-})
-.then(response => {
-  if (response.ok) {
-    alert('Pedido enviado com sucesso!');
-  } else {
-    alert('Erro ao enviar o pedido.');
+    });
   }
-})
-.catch(err => {
-  console.error('Erro:', err);
-  alert('Erro na comunicação com o backend.');
-});
-}
+
+  // Evento de clique para enviar o pedido
+  btnEnviar.addEventListener("click", () => {
+    const nome = inputNome.value.trim();
+    const pombo = inputPombo.value.trim();
+    const observacao = inputObservacao.value.trim();
+
+    if (!nome || !pombo) {
+      return alert("Preencha Nome e Pombo antes de finalizar.");
+    }
+
+    const pedidos = [];
+    tabelaCorpo.querySelectorAll("tr").forEach((row) => {
+      const input = row.querySelector(".quantidade");
+      const qtd = Number(input.value);
+      if (qtd > 0) {
+        const nomeItem = row.cells[0].textContent;
+        const min = Number(input.dataset.min);
+        const max = Number(input.dataset.max);
+        pedidos.push({
+          nomeItem,
+          quantidade: qtd,
+          totalMin: qtd * min,
+          totalMax: qtd * max,
+        });
+      }
+    });
+
+    if (pedidos.length === 0) {
+      return alert("Adicione pelo menos um item ao pedido.");
+    }
+
+    enviarPedidoDiscord(nome, pombo, observacao, pedidos);
+  });
 });
