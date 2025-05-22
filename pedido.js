@@ -1,7 +1,7 @@
 import { receitasFazenda } from "./receitasFazenda.js";
 import { receitasFerraria } from "./receitasFerraria.js";
 import { receitasSaloon } from "./receitasSaloon.js";
-import { webhookURL } from '@seu-usuario/webhook-config';
+import { webhookURL } from '@harizetamara/webhook-config';
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectLocal = document.getElementById("estabelecimento");
