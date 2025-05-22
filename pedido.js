@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     color: 14268043
   };
 
-  fetch('https://hkdk.events/m16y2w6ex48eih', { // <-- URL do Hookdeck gerada
+  fetch('https://hkdk.events/y4znblzr6b9r67', { // <-- URL do Hookdeck gerada
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ embeds: [embed] })
