@@ -87,65 +87,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
-    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text; // Obtém o nome do estabelecimento selecionado
-    const embed = {
-      title: `📦 Novo Pedido - ${estabelecimento}`,
-      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
-      fields: [
-        {
-          name: "📝 Observação",
-          value: observacao || "Sem observações",
-          inline: false,
-        },
-        {
-          name: "✨ Itens",
-          value: pedidos
-            .map(
-              (item) =>
-                `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
-                  2
-                )} - R$ ${item.totalMax.toFixed(2)}`
-            )
-            .join("\n"),
-          inline: false,
-        },
-        {
-          name: "Total Mínimo",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMin, 0)
-            .toFixed(2)}`,
-          inline: true,
-        },
-        {
-          name: "Total Máximo",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMax, 0)
-            .toFixed(2)}`,
-          inline: true,
-        },
-      ],
-      color: 14268043,
-    };
+  const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
 
-    const webhookBackendURL = "https://nightmare-backend.onrender.com/send-webhook";
-
-    fetch(webhookBackendURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  const embed = {
+    title: `📦 Novo Pedido - ${estabelecimento}`,
+    description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
+    fields: [
+      {
+        name: "📝 Observação",
+        value: observacao || "Sem observações",
+        inline: false
       },
-      body: JSON.stringify({ embeds: [embed] }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Pedido enviado com sucesso!");
-        } else {
-          alert("Erro ao enviar o pedido.");
-        }
-      })
-      .catch((error) => {
-        console.error("Erro ao enviar o pedido:", error);
-        alert("Erro ao enviar o pedido.");
-      });
+      {
+        name: "✨ Itens",
+        value: pedidos.map(item =>
+          `${item.nomeItem} - Qtd: ${item.quantidade} - R$ ${item.totalMin.toFixed(2)} ~ R$ ${item.totalMax.toFixed(2)}`
+        ).join("\n"),
+        inline: false
+      }
+    ],
+    color: 14268043
+  };
+
+  fetch('https://hkdk.events/m16y2w6ex48eih', { // <-- URL do Hookdeck gerada
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ embeds: [embed] })
+})
+.then(response => {
+  if (response.ok) {
+    alert('Pedido enviado com sucesso!');
+  } else {
+    alert('Erro ao enviar o pedido.');
   }
+})
+.catch(err => {
+  console.error('Erro:', err);
+  alert('Erro na comunicação com o backend.');
+});
+}
 });
