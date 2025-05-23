@@ -1,7 +1,6 @@
 import { receitasFazenda } from "./receitasFazenda.js";
 import { receitasFerraria } from "./receitasFerraria.js";
 import { receitasSaloon } from "./receitasSaloon.js";
-import { webhookURL } from '@harizetamara/webhook-config';
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectLocal = document.getElementById("estabelecimento");
@@ -80,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
   }
 
+  
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
     const embed = {
@@ -120,6 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       color: 3066993,
     };
+
+    const webhookURL = "https://discord.com/api/webhooks/1371591431549878322/1a65WMk6VBwbbZNEV-3yP_wGrIu7WRi2B7xdHR90fp_2HjOqPKWRRC-7w1lG8vhvdXfQ";
 
     fetch(webhookURL, {
       method: "POST",
