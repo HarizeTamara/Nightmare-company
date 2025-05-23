@@ -13,15 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let receitasAtuais = {};
 
-  // Adiciona o total geral abaixo da tabela
   totalGeralEl.id = "total-geral";
   totalGeralEl.style.marginTop = "1rem";
   document.querySelector("#itens-container").appendChild(totalGeralEl);
 
-  // Atualiza a tabela ao selecionar o estabelecimento
   selectLocal.addEventListener("change", () => {
     const local = selectLocal.value;
-    tabelaCorpo.innerHTML = ""; // Limpa a tabela
+    tabelaCorpo.innerHTML = "";
 
     if (local === "fazenda") receitasAtuais = receitasFazenda;
     if (local === "ferraria") receitasAtuais = receitasFerraria;
@@ -47,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data-min="${minPrice}" 
             data-max="${maxPrice}" />
         </td>
-        <td>R$ ${minPrice.toFixed(2)} – R$ ${maxPrice.toFixed(2)}</td>
+        <td>R$ 0.00</td>
       `;
       tabelaCorpo.appendChild(row);
     });
@@ -59,10 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
     calcularTotal();
   });
 
-  // Calcula o total mínimo e máximo
   function calcularTotal() {
-    let totalMin = 0,
-      totalMax = 0;
+    let totalGeral = 0;
 
     tabelaCorpo.querySelectorAll("tr").forEach((row) => {
       const input = row.querySelector(".quantidade");
@@ -70,22 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const min = Number(input.dataset.min);
       const max = Number(input.dataset.max);
 
-      totalMin += qtd * min;
-      totalMax += qtd * max;
+      let precoUnitario = qtd < 500 ? max : min;
+      let totalItem = qtd * precoUnitario;
+
+      const precoCell = row.querySelector("td:last-child");
+      precoCell.textContent = `R$ ${totalItem.toFixed(2)}`;
+
+      totalGeral += totalItem;
     });
 
-    totalGeralEl.textContent = `Total mínimo: R$ ${totalMin.toFixed(
-      2
-    )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
+    totalGeralEl.textContent = `Total: R$ ${totalGeral.toFixed(2)}`;
   }
 
-  const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
-
-  // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
+    const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
+
     const embed = {
-      title: '📦 Novo Pedido - ${estabelecimento}',
-      description: `🧾 Pedido de ${nome} - 🕊️ Pombo: ${pombo}`,
+      title: `📦 Novo Pedido - ${estabelecimento}`,
+      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
       fields: [
         {
           name: "📝 Observação",
@@ -97,26 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
           value: pedidos
             .map(
               (item) =>
-                `${item.nomeItem} - Quantidade: ${item.quantidade} - R$ ${item.totalMin.toFixed(
-                  2
-                )} - R$ ${item.totalMax.toFixed(2)}`
+                `${item.nomeItem} - Qtd: ${item.quantidade} - Total: R$ ${item.total.toFixed(2)}`
             )
             .join("\n"),
           inline: false,
         },
         {
-          name: "Total Mínimo",
+          name: "Total Geral",
           value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMin, 0)
+            .reduce((acc, item) => acc + item.total, 0)
             .toFixed(2)}`,
-          inline: true,
-        },
-        {
-          name: "Total Máximo",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.totalMax, 0)
-            .toFixed(2)}`,
-          inline: true,
+          inline: false,
         },
       ],
       color: 3066993,
@@ -139,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Evento de clique para enviar o pedido
   btnEnviar.addEventListener("click", () => {
     const nome = inputNome.value.trim();
     const pombo = inputPombo.value.trim();
@@ -157,11 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const nomeItem = row.cells[0].textContent;
         const min = Number(input.dataset.min);
         const max = Number(input.dataset.max);
+        let totalUnitario = qtd < 500 ? max : min;
+
         pedidos.push({
           nomeItem,
           quantidade: qtd,
-          totalMin: qtd * min,
-          totalMax: qtd * max,
+          total: qtd * totalUnitario,
         });
       }
     });
