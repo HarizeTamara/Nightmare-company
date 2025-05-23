@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pedidos</title>
+  <script type="module" crossorigin src="/Nightmare-company/assets/pedido-CQtZHbup.js"></script>
+  <link rel="stylesheet" crossorigin href="/Nightmare-company/assets/style-Cz9D-E6x.css">
+</head>
+<body>
+  <header>
+    <h1 class="titulo">Pedidos</h1>
+    <div>
+      <nav>
+        <ul class="menu">
+          <li><a href="https://harizetamara.github.io/Nightmare-company/">🏠</a></li> 
+          <li><a href="fazenda.html">🌾 Fazenda</a></li>
+          <li><a href="ferraria.html">🔨 Ferraria</a></li>
+          <li><a href="saloon.html">🍻 Saloon</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Escolha o local -->
+    <div class="form-container">
+      <label class="container-estabelecimento" for="estabelecimento">Escolha o local:</label>
+      <select id="estabelecimento">
+        <option value="">-- Selecione --</option>
+        <option value="fazenda">Fazenda</option>
+        <option value="ferraria">Ferraria</option>
+        <option value="saloon">Saloon</option>
+      </select>
+    </div>
+  
+   <!-- Nome -->
+   <div class="form-row">
+    <div class="form-container">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" placeholder="Seu nome no RP">
+    </div>
+    <div class="form-container">
+      <label for="pombo">Pombo:</label>
+      <input type="text" id="pombo" placeholder="Seu pombo">
+    </div>
+  </div>
+  
+    <!-- Tabela de itens -->
+<div id="itens-container" class="tabela-container" style="display: none;">
+  <h2>Itens disponíveis:</h2>
+  <table id="tabelaPedidos">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itens serão inseridos aqui via JS -->
+    </tbody>
+  </table>
+
+  <!-- Total Geral -->
+  <div id="total-geral" style="margin-top: 1rem; font-size: 1.2rem; font-weight: bold;"></div>
+</div>
+
+    <!-- Observações -->
+    <div class="form-container">
+      <label class="container-obs" for="obs">Observações:</label>
+      <textarea id="obs" placeholder="Alguma observação?"></textarea>
+    </div>
+  
+    <!-- Botão Enviar Pedido -->
+    <div class="form-container">
+      <button id="enviar">Enviar Pedido</button>
+    </div>
+  </main>
+
+  <label class="heart-switch top-right">
+    <input type="checkbox">
+    <svg viewBox="0 0 33 23" fill="white">
+      <path d="M23.5,0.5 C28.4705627,0.5 32.5,4.52943725 32.5,9.5 C32.5,16.9484448 21.46672,22.5 16.5,22.5 C11.53328,22.5 0.5,16.9484448 0.5,9.5 C0.5,4.52952206 4.52943725,0.5 9.5,0.5 C12.3277083,0.5 14.8508336,1.80407476 16.5007741,3.84362242 C18.1491664,1.80407476 20.6722917,0.5 23.5,0.5 Z"></path>
+    </svg>
+  </label>
+
+  <footer class="footer-text">
+    <a href="https://harizetamara.com" target="_blank" style="text-decoration: none; color: inherit;"> 
+        Desenvolvido por Harize Tamara &copy; 2025
+      </a>
+  </footer>
+
+  <script src="toggle-theme.js"></script>
+</body>
+</html>

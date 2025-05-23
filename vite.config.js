@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-  base: './',  // importante se for usar em GitHub Pages ou pasta específica
+  base: '/Nightmare-company/',
   build: {
-    outDir: 'dist',  // saída do build
-  },
-  server: {
-    open: true, // abre o navegador automaticamente
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        pedido: resolve(__dirname, 'pedido.html')
+      }
+    }
   }
 });
+
