@@ -79,12 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
     )} — Total máximo: R$ ${totalMax.toFixed(2)}`;
   }
 
-  
+  const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
+
   // Envia o pedido para o Discord
   function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
     const embed = {
-      title: "📦 Novo Pedido",
-      description: `🧾 Pedido de ${nome} (🕊️ Pombo: ${pombo})`,
+      title: '📦 Novo Pedido - ${estabelecimento}',
+      description: `🧾 Pedido de ${nome} - 🕊️ Pombo: ${pombo}`,
       fields: [
         {
           name: "📝 Observação",
