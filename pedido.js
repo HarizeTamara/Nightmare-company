@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data-min="${minPrice}" 
             data-max="${maxPrice}" />
         </td>
-        <td>R$ 0.00</td>
+        <td>R$ ${minPrice.toFixed(2)} – R$ ${maxPrice.toFixed(2)}</td>
       `;
       tabelaCorpo.appendChild(row);
     });
@@ -78,54 +78,36 @@ document.addEventListener("DOMContentLoaded", () => {
     totalGeralEl.textContent = `Total: R$ ${totalGeral.toFixed(2)}`;
   }
 
-  function enviarPedidoDiscord(nome, pombo, observacao, pedidos) {
+  function enviarPedidoBackend(nome, pombo, observacao, pedidos) {
     const estabelecimento = selectLocal.options[selectLocal.selectedIndex].text;
 
-    const embed = {
-      title: `📦 Novo Pedido - ${estabelecimento}`,
-      description: `🧾 Pedido de ${nome} | 🕊️ Pombo: ${pombo}`,
-      fields: [
-        {
-          name: "📝 Observação",
-          value: observacao || "Sem observações",
-          inline: false,
-        },
-        {
-          name: "Itens",
-          value: pedidos
-            .map(
-              (item) =>
-                `${item.nomeItem} - Qtd: ${item.quantidade} - Total: R$ ${item.total.toFixed(2)}`
-            )
-            .join("\n"),
-          inline: false,
-        },
-        {
-          name: "Total Geral",
-          value: `R$ ${pedidos
-            .reduce((acc, item) => acc + item.total, 0)
-            .toFixed(2)}`,
-          inline: false,
-        },
-      ],
-      color: 3066993,
-    };
+    pedidos.forEach((item) => {
+      const payload = {
+        client_name: nome,
+        product_name: item.nomeItem,
+        quantity: item.quantidade,
+        order_price: item.total,
+        observation: observacao || ""
+      };
 
-    const webhookURL = "https://discord.com/api/webhooks/1371591431549878322/1a65WMk6VBwbbZNEV-3yP_wGrIu7WRi2B7xdHR90fp_2HjOqPKWRRC-7w1lG8vhvdXfQ";
-
-    fetch(webhookURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ embeds: [embed] }),
-    }).then((response) => {
-      if (response.ok) {
-        alert("Pedido enviado com sucesso!");
-      } else {
-        alert("Erro ao enviar o pedido.");
-      }
+      fetch('https://backend-webhooker.onrender.com/order/', {  // <-- Substitua com a URL real do seu backend
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log(`Pedido de ${item.nomeItem} enviado com sucesso!`);
+        } else {
+          console.error(`Erro ao enviar o pedido de ${item.nomeItem}.`);
+        }
+      })
+      .catch(err => {
+        console.error('Erro na comunicação com o backend:', err);
+      });
     });
+
+    alert("Todos os itens foram enviados com sucesso!");
   }
 
   btnEnviar.addEventListener("click", () => {
@@ -145,12 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const nomeItem = row.cells[0].textContent;
         const min = Number(input.dataset.min);
         const max = Number(input.dataset.max);
-        let totalUnitario = qtd < 500 ? max : min;
+        let precoUnitario = qtd < 500 ? max : min;
 
         pedidos.push({
           nomeItem,
           quantidade: qtd,
-          total: qtd * totalUnitario,
+          total: qtd * precoUnitario
         });
       }
     });
@@ -159,6 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return alert("Adicione pelo menos um item ao pedido.");
     }
 
-    enviarPedidoDiscord(nome, pombo, observacao, pedidos);
+    enviarPedidoBackend(nome, pombo, observacao, pedidos);
   });
 });

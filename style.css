@@ -675,9 +675,10 @@ body.dark #tabelaPedidos th {
   color: var(--color-preto); /* Cor fixa para o texto */
 }
 
-/* Garante que o fundo da tabela também não mude */
+/* Garante que o fundo da tabela também não mude 
 body.dark #tabelaPedidos {
-}
+  background-color: none;
+} */
 
 body.dark #tabelaPedidos th,
 body.dark #tabelaPedidos td {
